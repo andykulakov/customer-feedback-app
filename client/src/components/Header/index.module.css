@@ -1,0 +1,16 @@
+@import '../../styles/vars.css';
+@value breakpoint-desktop from '../../styles/breakpoints.module.css';
+
+.heading {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: var(--margin-md);
+}
+
+@media breakpoint-desktop {
+  .heading {
+    font-size: 3rem;
+    text-align: left;
+    margin-bottom: var(--margin-lg);
+  }
+}

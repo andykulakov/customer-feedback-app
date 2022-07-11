@@ -1,0 +1,26 @@
+@import '../../styles/vars.css';
+@value breakpoint-desktop from '../../styles/breakpoints.module.css';
+
+.heading {
+    font-size: 2rem;
+    margin-bottom: var(--margin-md);
+}
+
+.reviews {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: var(--margin-md);
+}
+
+@media breakpoint-tablet {
+    .reviews {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media breakpoint-desktop {
+    .reviews {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: var(--margin-lg);
+    }
+}

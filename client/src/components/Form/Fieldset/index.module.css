@@ -1,0 +1,9 @@
+@import '../../../styles/vars.css';
+
+.fieldset {
+  border: none;
+}
+
+.legend {
+  margin-bottom: 10px;
+}
