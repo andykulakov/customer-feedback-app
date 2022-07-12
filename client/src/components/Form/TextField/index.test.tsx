@@ -1,6 +1,8 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 
+import {getMockedErrorInfo} from '../../../helpers/testing';
+
 import TextField, {TextFieldProps} from '.';
 
 function createTestables(propOverrides?: Partial<TextFieldProps>) {
@@ -10,7 +12,7 @@ function createTestables(propOverrides?: Partial<TextFieldProps>) {
             type="text"
             name="name"
             label="label"
-            error={{hasErrors: false, message: ''}}
+            error={getMockedErrorInfo()}
             isRequired={false}
             placeholder="placeholder"
             onChange={jest.fn()}

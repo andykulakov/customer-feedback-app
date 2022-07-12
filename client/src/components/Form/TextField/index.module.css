@@ -18,7 +18,7 @@
 }
 
 .input::placeholder {
-  color: var(--color-border);
+  color: var(--color-faded);
 }
 
 .error {
@@ -27,9 +27,4 @@
 
 .error:focus {
   outline: 1px solid var(--color-error);
-}
-
-.errorMessage {
-  color: var(--color-error);
-  margin-top: var(--margin-xs);
 }

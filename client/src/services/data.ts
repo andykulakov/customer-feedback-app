@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {ReviewForm} from '../types/reviews';
+import {ReviewForm} from '../types/forms';
 
 export const API_URL = 'http://localhost:9000';
 let dataServiceInstance: DataService;

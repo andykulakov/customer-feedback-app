@@ -1,8 +1,9 @@
 import React from 'react';
 
-import {ErrorInfo} from '../../../types/reviews';
+import {ErrorInfo} from '../../../types/forms';
 
 import Label from '../Label';
+import ErrorMessage from '../ErrorMesage';
 
 import styles from './index.module.css';
 
@@ -34,7 +35,7 @@ const TextField: React.FC<TextFieldProps> = ({value, name, type, placeholder, la
                 aria-required={isRequired ? 'true' : 'false'}
                 onChange={onChange}
             />
-            {error.hasErrors && <div className={styles.errorMessage}>{error.message}</div>}
+            {error.hasErrors && <ErrorMessage>{error.message}</ErrorMessage>}
         </React.Fragment>
     );
 };
