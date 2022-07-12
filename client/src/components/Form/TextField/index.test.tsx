@@ -5,7 +5,17 @@ import TextField, {TextFieldProps} from '.';
 
 function createTestables(propOverrides?: Partial<TextFieldProps>) {
     render(
-        <TextField value="value" type="text" name="name" label="label" isRequired={false} placeholder="placeholder" onChange={jest.fn()} {...propOverrides} />
+        <TextField
+            value="value"
+            type="text"
+            name="name"
+            label="label"
+            error={{hasErrors: false, message: ''}}
+            isRequired={false}
+            placeholder="placeholder"
+            onChange={jest.fn()}
+            {...propOverrides}
+        />
     );
 }
 

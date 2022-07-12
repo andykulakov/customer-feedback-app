@@ -1,3 +1,5 @@
+import {FormFields} from './enums';
+
 export interface DBReview {
     id: string;
     date: string;
@@ -17,8 +19,15 @@ export interface Review {
 }
 
 export interface ReviewForm {
-    name: string;
-    email: string;
-    rating: number;
-    comment: string;
+    [FormFields.Name]: string;
+    [FormFields.Email]: string;
+    [FormFields.Rating]: number;
+    [FormFields.Comment]: string;
 }
+
+export interface ErrorInfo {
+    hasErrors: boolean;
+    message: string;
+}
+
+export type Errors = Record<FormFields, ErrorInfo>;

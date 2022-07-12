@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {ReviewForm} from '../types/reviews';
 
-export const API_URL = 'http://localhost:9000/';
+export const API_URL = 'http://localhost:9000';
 let dataServiceInstance: DataService;
 
 export class DataService {
