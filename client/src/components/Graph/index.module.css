@@ -1,0 +1,6 @@
+@import '../../styles/vars.css';
+
+.heading {
+    font-size: 2rem;
+    margin-bottom: var(--margin-md);
+}

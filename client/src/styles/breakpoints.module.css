@@ -1,0 +1,2 @@
+@value breakpoint-tablet: (min-width: 768px);
+@value breakpoint-desktop: (min-width: 1280px);

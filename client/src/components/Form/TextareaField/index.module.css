@@ -1,0 +1,20 @@
+.textarea {
+  width: 100%;
+  display: block;
+  color: var(--color-base);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  height: 100px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.textarea:focus {
+  outline: 1px solid var(--color-outline-light);
+  outline-offset: -1px;
+}
+
+.textarea::placeholder {
+  color: var(--color-faded);
+}

@@ -1,0 +1,25 @@
+@import "vars.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  color: var(--color-base);
+  background-color: var(--color-white);
+  font-size: 14px;
+  margin: 0;
+  font-family: 'Albert Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input, textarea {
+  font-family: 'Albert Sans', sans-serif;
+}
+
+input::placeholder, textarea::placeholder {
+  font-family: 'Albert Sans', sans-serif;
+}
