@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16 AS builder
 
 WORKDIR /client
 
@@ -8,6 +8,14 @@ RUN npm install
 
 COPY . /client/
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "start"]
+FROM nginx:1.21.0-alpine AS production
+
+COPY --from=builder /client/build /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
