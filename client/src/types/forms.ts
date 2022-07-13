@@ -2,7 +2,7 @@ import {FormFields} from './enums';
 
 export type FormValidationRules = Record<FormFields, ValidationRules>;
 
-interface ValidationRules {
+export interface ValidationRules {
     required?: {
         value: boolean;
         message: string;

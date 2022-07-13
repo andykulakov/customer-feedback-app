@@ -13,9 +13,7 @@ const LatestComments: React.FC = () => {
         <section>
             <h2 className={styles.heading}>Latest Comments</h2>
             <div className={styles.reviews}>
-                {data.reviews.map(review => (
-                    <ReviewCard key={review.id} review={review} />
-                ))}
+                {data.reviews.length > 0 ? data.reviews.map(review => <ReviewCard key={review.id} review={review} />) : 'No comments yet.'}
             </div>
         </section>
     );

@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 
-import {getDataService} from '../../services/data';
+import {postReview} from '../../services/actions';
 import {ReviewForm} from '../../types/forms';
 import {FormFields} from '../../types/enums';
 import {useFormValidation} from '../../hooks/useFormValidation';
@@ -9,6 +9,7 @@ import TextField from './TextField';
 import RadioGroupField from './RadioGroupField';
 import TextareaField from './TextareaField';
 import Button from '../Button';
+import ErrorMessage from './ErrorMesage';
 
 import {initialFormData, initialErrors, validationRules} from './configuration';
 import styles from './index.module.css';
@@ -28,6 +29,7 @@ function getFormattedFieldValue(field: FormFields, value: string): string | numb
 
 const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
     const [form, setForm] = useState<ReviewForm>(initialFormData);
+    const [formErrorMessage, setFormErrorMessage] = useState('');
     const {errors, validateFieldIfHasError, validateFormAndGetIsValid} = useFormValidation({form, validationRules, initialErrors});
 
     const handleSubmit: React.FormEventHandler = useCallback(
@@ -36,11 +38,15 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
             const isFormValid = validateFormAndGetIsValid();
 
             if (isFormValid) {
-                getDataService()
-                    .postReview(form)
+                postReview(form)
                     .then(() => {
                         setForm(initialFormData);
+                        setFormErrorMessage('');
                         onSubmitSuccess();
+                    })
+                    .catch(error => {
+                        setFormErrorMessage('Review submission failed. Please, try again.');
+                        console.error('Could not submit review.', error);
                     });
             }
         },
@@ -112,6 +118,7 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
             </div>
             <div className={styles.inputWrapper}>
                 <Button type="submit">Submit your review</Button>
+                {formErrorMessage && <ErrorMessage id="submit-error">{formErrorMessage}</ErrorMessage>}
             </div>
         </form>
     );

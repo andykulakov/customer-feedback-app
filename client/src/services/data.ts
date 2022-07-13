@@ -10,7 +10,7 @@ export class DataService {
         return axios.get(url);
     }
 
-    private post<T>(url: string, body: T): Promise<unknown> {
+    private post<T>(url: string, body: T): Promise<void> {
         return axios.post(url, body);
     }
 
@@ -18,7 +18,7 @@ export class DataService {
         return this.get(`${API_URL}/reviews`);
     }
 
-    public postReview(body: ReviewForm): Promise<unknown> {
+    public postReview(body: ReviewForm): Promise<void> {
         return this.post(`${API_URL}/reviews/new`, body);
     }
 }

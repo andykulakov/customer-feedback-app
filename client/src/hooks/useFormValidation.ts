@@ -2,12 +2,42 @@ import {useCallback, useState} from 'react';
 
 import {isString} from '../helpers/typeguards';
 import {FormFields} from '../types/enums';
-import {FormValidationRules, ErrorInfo, Errors, ReviewForm} from '../types/forms';
+import {FormValidationRules, ErrorInfo, Errors, ReviewForm, ValidationRules} from '../types/forms';
 
 interface UseFormValidationOptions {
     form: ReviewForm;
     validationRules: FormValidationRules;
     initialErrors: Errors;
+}
+
+function getErrorInfo(value: string | number, validationRule: ValidationRules): ErrorInfo {
+    if (validationRule?.required?.value && !value) {
+        return {
+            hasErrors: true,
+            message: validationRule?.required?.message
+        };
+    }
+
+    const pattern = validationRule?.pattern;
+    if (pattern?.value && isString(value) && !RegExp(pattern.value).test(value)) {
+        return {
+            hasErrors: true,
+            message: pattern.message
+        };
+    }
+
+    const custom = validationRule?.custom;
+    if (custom?.isValid && !custom.isValid(value)) {
+        return {
+            hasErrors: true,
+            message: custom.message
+        };
+    }
+
+    return {
+        hasErrors: false,
+        message: ''
+    };
 }
 
 export function useFormValidation(options: UseFormValidationOptions) {
@@ -16,28 +46,7 @@ export function useFormValidation(options: UseFormValidationOptions) {
 
     const validateField = useCallback(
         (formField: FormFields, value: string | number): ErrorInfo => {
-            const validationRule = validationRules[formField];
-            const fieldError: ErrorInfo = {
-                hasErrors: false,
-                message: ''
-            };
-
-            if (validationRule?.required?.value && !value) {
-                fieldError.hasErrors = true;
-                fieldError.message = validationRule?.required?.message;
-            }
-
-            const pattern = validationRule?.pattern;
-            if (pattern?.value && isString(value) && !RegExp(pattern.value).test(value)) {
-                fieldError.hasErrors = true;
-                fieldError.message = pattern.message;
-            }
-
-            const custom = validationRule?.custom;
-            if (custom?.isValid && !custom.isValid(value)) {
-                fieldError.hasErrors = true;
-                fieldError.message = custom.message;
-            }
+            const fieldError: ErrorInfo = getErrorInfo(value, validationRules[formField]);
 
             setErrors(prevState => ({
                 ...prevState,

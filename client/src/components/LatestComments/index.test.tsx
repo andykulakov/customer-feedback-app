@@ -37,4 +37,20 @@ describe('client/src/components/LatestComments', () => {
 
         expect(screen.getAllByRole('heading', {level: 3})).toHaveLength(contextData.data.reviews.length);
     });
+
+    it('should display the placeholder if there are no reviews', () => {
+        const contextDataWithoutReviews: AppContextData = {
+            ...contextData,
+            data: {
+                reviews: []
+            }
+        };
+        render(
+            <AppContext.Provider value={contextDataWithoutReviews}>
+                <LatestComments />
+            </AppContext.Provider>
+        );
+
+        expect(screen.getByText('No comments yet.')).toBeInTheDocument();
+    });
 });

@@ -40,11 +40,11 @@ export const validationRules: FormValidationRules = {
     email: {
         required: {
             value: true,
-            message: 'Email address is required.'
+            message: 'Email is required.'
         },
         pattern: {
             value: EMAIL_REGEXP,
-            message: 'Email address is invalid.'
+            message: 'Email is invalid.'
         }
     },
     rating: {

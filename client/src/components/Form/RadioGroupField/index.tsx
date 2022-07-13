@@ -24,7 +24,7 @@ const RadioGroupField: React.FC<RadioGroupFieldProps> = ({name, value, label, le
     const errorId = `${name}-error`;
 
     return (
-        <Fieldset legend={label} isRequired={isRequired} aria-describedby={error.hasErrors ? errorId : undefined}>
+        <Fieldset legend={label} isRequired={isRequired}>
             {getArrayFromLength(length).map(inputValue => {
                 return (
                     <RadioInput
