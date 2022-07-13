@@ -20,10 +20,13 @@ export interface TextFieldProps {
 
 const TextField: React.FC<TextFieldProps> = ({value, name, type, placeholder, label, error, isRequired, onChange}) => {
     const inputId = `input-${name}`;
+    const errorId = `${name}-error`;
 
     return (
         <React.Fragment>
-            <Label htmlFor={inputId}>{label}</Label>
+            <Label htmlFor={inputId} isRequired={isRequired}>
+                {label}
+            </Label>
             <input
                 id={inputId}
                 className={`${styles.input} ${error.hasErrors && styles.error}`}
@@ -33,9 +36,10 @@ const TextField: React.FC<TextFieldProps> = ({value, name, type, placeholder, la
                 placeholder={placeholder}
                 required={isRequired}
                 aria-required={isRequired ? 'true' : 'false'}
+                aria-describedby={error.hasErrors ? errorId : undefined}
                 onChange={onChange}
             />
-            {error.hasErrors && <ErrorMessage>{error.message}</ErrorMessage>}
+            {error.hasErrors && <ErrorMessage id={errorId}>{error.message}</ErrorMessage>}
         </React.Fragment>
     );
 };

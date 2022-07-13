@@ -4,13 +4,14 @@ import styles from './index.module.css';
 
 interface LabelProps {
     htmlFor: string;
+    isRequired: boolean;
     children: React.ReactNode;
 }
 
-const Label: React.FC<LabelProps> = ({htmlFor, children}) => {
+const Label: React.FC<LabelProps> = ({htmlFor, isRequired, children}) => {
     return (
         <label className={styles.label} htmlFor={htmlFor}>
-            {children}
+            {children} {isRequired && <i aria-hidden="true">*</i>}
         </label>
     );
 };

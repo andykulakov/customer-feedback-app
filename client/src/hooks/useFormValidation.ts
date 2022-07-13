@@ -15,38 +15,47 @@ export function useFormValidation(options: UseFormValidationOptions) {
     const [errors, setErrors] = useState<Errors>(initialErrors);
 
     const validateField = useCallback(
-        (formKey: FormFields, value: string | number): ErrorInfo => {
-            const validationRule = validationRules[formKey];
+        (formField: FormFields, value: string | number): ErrorInfo => {
+            const validationRule = validationRules[formField];
+            const fieldError: ErrorInfo = {
+                hasErrors: false,
+                message: ''
+            };
 
             if (validationRule?.required?.value && !value) {
-                return {
-                    hasErrors: true,
-                    message: validationRule?.required?.message
-                };
+                fieldError.hasErrors = true;
+                fieldError.message = validationRule?.required?.message;
             }
 
             const pattern = validationRule?.pattern;
             if (pattern?.value && isString(value) && !RegExp(pattern.value).test(value)) {
-                return {
-                    hasErrors: true,
-                    message: pattern.message
-                };
+                fieldError.hasErrors = true;
+                fieldError.message = pattern.message;
             }
 
             const custom = validationRule?.custom;
             if (custom?.isValid && !custom.isValid(value)) {
-                return {
-                    hasErrors: true,
-                    message: custom.message
-                };
+                fieldError.hasErrors = true;
+                fieldError.message = custom.message;
             }
 
-            return {
-                hasErrors: false,
-                message: ''
-            };
+            setErrors(prevState => ({
+                ...prevState,
+                [formField]: fieldError
+            }));
+
+            return fieldError;
         },
         [validationRules]
+    );
+
+    const validateFieldIfHasError = useCallback(
+        (formField: FormFields, value: string | number) => {
+            if (errors[formField].hasErrors) {
+                validateField(formField, value);
+            }
+        },
+        [errors, validateField]
     );
 
     const validateFormAndGetIsValid = useCallback(() => {
@@ -66,8 +75,7 @@ export function useFormValidation(options: UseFormValidationOptions) {
 
     return {
         errors,
-        setErrors,
-        validateField,
+        validateFieldIfHasError,
         validateFormAndGetIsValid
     };
 }

@@ -6,7 +6,7 @@ import Fieldset from '.';
 describe('client/src/components/Form/Fieldset', () => {
     it('should display a legend', () => {
         render(
-            <Fieldset legend="Legend">
+            <Fieldset legend="Legend" isRequired>
                 <input type="text" />
             </Fieldset>
         );
@@ -16,7 +16,7 @@ describe('client/src/components/Form/Fieldset', () => {
 
     it('should display children', () => {
         render(
-            <Fieldset legend="Legend">
+            <Fieldset legend="Legend" isRequired>
                 <input type="text" />
             </Fieldset>
         );

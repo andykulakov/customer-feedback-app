@@ -17,9 +17,18 @@ interface FormProps {
     onSubmitSuccess(): void;
 }
 
+function getFormattedFieldValue(field: FormFields, value: string): string | number {
+    switch (field) {
+        case FormFields.Rating:
+            return Number(value);
+        default:
+            return value;
+    }
+}
+
 const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
     const [form, setForm] = useState<ReviewForm>(initialFormData);
-    const {errors, setErrors, validateField, validateFormAndGetIsValid} = useFormValidation({form, validationRules, initialErrors});
+    const {errors, validateFieldIfHasError, validateFormAndGetIsValid} = useFormValidation({form, validationRules, initialErrors});
 
     const handleSubmit: React.FormEventHandler = useCallback(
         async event => {
@@ -41,23 +50,15 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
     const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
         event => {
             const name = event.target.name as FormFields;
-            const value = name === FormFields.Rating ? Number(event.target.value) : event.target.value;
+            const value = getFormattedFieldValue(name, event.target.value);
 
             setForm(prevForm => ({
                 ...prevForm,
                 [name]: value
             }));
-
-            const {hasErrors, message} = validateField(name, value);
-            setErrors(prevState => ({
-                ...prevState,
-                [name]: {
-                    hasErrors,
-                    message
-                }
-            }));
+            validateFieldIfHasError(name, value);
         },
-        [setErrors, validateField]
+        [validateFieldIfHasError]
     );
 
     return (
