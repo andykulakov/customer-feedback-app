@@ -1,11 +1,23 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 
+import {getMockedErrorInfo} from '../../../helpers/testing';
+
 import TextField, {TextFieldProps} from '.';
 
 function createTestables(propOverrides?: Partial<TextFieldProps>) {
     render(
-        <TextField value="value" type="text" name="name" label="label" isRequired={false} placeholder="placeholder" onChange={jest.fn()} {...propOverrides} />
+        <TextField
+            value="value"
+            type="text"
+            name="name"
+            label="label"
+            error={getMockedErrorInfo()}
+            isRequired={false}
+            placeholder="placeholder"
+            onChange={jest.fn()}
+            {...propOverrides}
+        />
     );
 }
 

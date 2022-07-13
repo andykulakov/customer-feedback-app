@@ -1,10 +1,12 @@
 import React from 'react';
 
 import {getArrayFromLength} from '../../../helpers';
+import {ErrorInfo} from '../../../types/forms';
 
 import Fieldset from '../Fieldset';
 import RadioInput from './RadioInput';
 import Star from '../../Star';
+import ErrorMessage from '../ErrorMesage';
 
 import styles from './index.module.css';
 
@@ -13,11 +15,12 @@ export interface RadioGroupFieldProps {
     value: number;
     label: string;
     length: number;
+    error: ErrorInfo;
     isRequired: boolean;
     onChange: React.ChangeEventHandler;
 }
 
-const RadioGroupField: React.FC<RadioGroupFieldProps> = ({name, value, label, length, isRequired, onChange}) => {
+const RadioGroupField: React.FC<RadioGroupFieldProps> = ({name, value, label, length, error, isRequired, onChange}) => {
     return (
         <Fieldset legend={label}>
             {getArrayFromLength(length).map(inputValue => {
@@ -28,7 +31,7 @@ const RadioGroupField: React.FC<RadioGroupFieldProps> = ({name, value, label, le
                         name="rating"
                         isChecked={Number(value) === inputValue}
                         isVisuallyChecked={inputValue <= value}
-                        isRequired
+                        isRequired={isRequired}
                         onChange={onChange}
                     >
                         <span className={styles.hidden}>{inputValue} stars</span>
@@ -36,6 +39,7 @@ const RadioGroupField: React.FC<RadioGroupFieldProps> = ({name, value, label, le
                     </RadioInput>
                 );
             })}
+            {error.hasErrors && <ErrorMessage>{error.message}</ErrorMessage>}
         </Fieldset>
     );
 };

@@ -1,5 +1,6 @@
 import {DBResponse} from '../types';
-import {DBReview, Review, ReviewForm} from '../types/reviews';
+import {DBReview, Review} from '../types/reviews';
+import {ErrorInfo, ReviewForm} from '../types/forms';
 
 export function getMockedDataResponse<T>(response: T): DBResponse<T> {
     return {
@@ -39,4 +40,8 @@ export function getMockedReviewForm(overrides?: Partial<ReviewForm>): ReviewForm
         comment: 'Test Comment',
         ...overrides
     };
+}
+
+export function getMockedErrorInfo(overrides?: Partial<ErrorInfo>): ErrorInfo {
+    return {hasErrors: false, message: '', ...overrides};
 }

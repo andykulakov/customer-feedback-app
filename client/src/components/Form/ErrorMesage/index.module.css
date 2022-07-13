@@ -1,0 +1,4 @@
+.errorMessage {
+    color: var(--color-error);
+    margin-top: var(--margin-xs);
+}

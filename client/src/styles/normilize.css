@@ -22,4 +22,5 @@ input, textarea {
 
 input::placeholder, textarea::placeholder {
   font-family: 'Albert Sans', sans-serif;
+  font-size: 1rem;
 }

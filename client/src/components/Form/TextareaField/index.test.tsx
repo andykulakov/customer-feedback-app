@@ -1,6 +1,8 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 
+import {getMockedErrorInfo} from '../../../helpers/testing';
+
 import TextareaField, {TextareaFieldProps} from '.';
 
 function createTestables(propOverrides?: Partial<TextareaFieldProps>) {
@@ -12,6 +14,7 @@ function createTestables(propOverrides?: Partial<TextareaFieldProps>) {
             maxLength={140}
             isRequired={false}
             placeholder="placeholder"
+            error={getMockedErrorInfo()}
             onChange={jest.fn()}
             {...propOverrides}
         />

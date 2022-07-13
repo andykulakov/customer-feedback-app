@@ -1,7 +1,11 @@
 import React from 'react';
 
-import styles from './index.module.css';
+import {ErrorInfo} from '../../../types/forms';
+
 import Label from '../Label';
+import ErrorMessage from '../ErrorMesage';
+
+import styles from './index.module.css';
 
 export interface TextareaFieldProps {
     value: string;
@@ -9,11 +13,12 @@ export interface TextareaFieldProps {
     placeholder: string;
     label: string;
     maxLength: number;
+    error: ErrorInfo;
     isRequired: boolean;
     onChange: React.ChangeEventHandler;
 }
 
-const TextareaField: React.FC<TextareaFieldProps> = ({value, name, placeholder, label, maxLength, isRequired, onChange}) => {
+const TextareaField: React.FC<TextareaFieldProps> = ({value, name, placeholder, label, maxLength, error, isRequired, onChange}) => {
     const inputId = `input-${name}`;
 
     return (
@@ -21,7 +26,7 @@ const TextareaField: React.FC<TextareaFieldProps> = ({value, name, placeholder, 
             <Label htmlFor={inputId}>{label}</Label>
             <textarea
                 id={inputId}
-                className={styles.textarea}
+                className={`${styles.textarea} ${error.hasErrors && styles.error}`}
                 value={value}
                 name={name}
                 placeholder={placeholder}
@@ -29,6 +34,7 @@ const TextareaField: React.FC<TextareaFieldProps> = ({value, name, placeholder, 
                 required={isRequired}
                 onChange={onChange}
             />
+            {error.hasErrors && <ErrorMessage>{error.message}</ErrorMessage>}
         </React.Fragment>
     );
 };

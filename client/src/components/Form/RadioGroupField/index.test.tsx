@@ -1,10 +1,23 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 
+import {getMockedErrorInfo} from '../../../helpers/testing';
+
 import RadioGroupField, {RadioGroupFieldProps} from '.';
 
 function createTestables(propOverrides?: Partial<RadioGroupFieldProps>) {
-    render(<RadioGroupField value={5} name="name" label="label" length={5} isRequired={false} onChange={jest.fn()} {...propOverrides} />);
+    render(
+        <RadioGroupField
+            value={5}
+            name="name"
+            label="label"
+            length={5}
+            error={getMockedErrorInfo()}
+            isRequired={false}
+            onChange={jest.fn()}
+            {...propOverrides}
+        />
+    );
 }
 
 describe('client/src/components/Form/RadioGroupField', () => {
