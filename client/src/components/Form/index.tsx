@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {postReview} from '../../services/actions';
 import {ReviewForm} from '../../types/forms';
@@ -28,9 +28,23 @@ function getFormattedFieldValue(field: FormFields, value: string): string | numb
 }
 
 const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
+    const formRef = useRef<HTMLFormElement | null>(null);
     const [form, setForm] = useState<ReviewForm>(initialFormData);
     const [formErrorMessage, setFormErrorMessage] = useState('');
     const {errors, validateFieldIfHasError, validateFormAndGetIsValid} = useFormValidation({form, validationRules, initialErrors});
+
+    const tryPostReview = useCallback(() => {
+        postReview(form)
+            .then(() => {
+                setForm(initialFormData);
+                setFormErrorMessage('');
+                onSubmitSuccess();
+            })
+            .catch(error => {
+                setFormErrorMessage('Review submission failed. Please, try again.');
+                console.error('Could not submit review.', error);
+            });
+    }, [form, onSubmitSuccess]);
 
     const handleSubmit: React.FormEventHandler = useCallback(
         async event => {
@@ -38,19 +52,14 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
             const isFormValid = validateFormAndGetIsValid();
 
             if (isFormValid) {
-                postReview(form)
-                    .then(() => {
-                        setForm(initialFormData);
-                        setFormErrorMessage('');
-                        onSubmitSuccess();
-                    })
-                    .catch(error => {
-                        setFormErrorMessage('Review submission failed. Please, try again.');
-                        console.error('Could not submit review.', error);
-                    });
+                tryPostReview();
+            } else {
+                if (formRef.current) {
+                    formRef.current?.scrollIntoView();
+                }
             }
         },
-        [form, validateFormAndGetIsValid, onSubmitSuccess]
+        [validateFormAndGetIsValid]
     );
 
     const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -68,7 +77,7 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
     );
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
+        <form ref={formRef} onSubmit={handleSubmit} noValidate>
             <div className={styles.inputWrapper}>
                 <TextField
                     value={form.name}
@@ -117,8 +126,12 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
                 />
             </div>
             <div className={styles.inputWrapper}>
-                <Button type="submit">Submit your review</Button>
-                {formErrorMessage && <ErrorMessage id="submit-error">{formErrorMessage}</ErrorMessage>}
+                <Button type="submit" aria-describedby="submit-error">
+                    Submit your review
+                </Button>
+                <ErrorMessage id="submit-error" isHidden={!formErrorMessage}>
+                    {formErrorMessage}
+                </ErrorMessage>
             </div>
         </form>
     );

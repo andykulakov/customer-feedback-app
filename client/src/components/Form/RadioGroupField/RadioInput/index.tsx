@@ -8,12 +8,11 @@ interface RadioInputProps {
     isChecked: boolean;
     isVisuallyChecked: boolean;
     isRequired: boolean;
-    errorId: string | null;
     children: React.ReactNode;
     onChange: React.ChangeEventHandler;
 }
 
-const RadioInput: React.FC<RadioInputProps> = ({value, name, isChecked, isVisuallyChecked, isRequired, errorId, children, onChange}) => {
+const RadioInput: React.FC<RadioInputProps> = ({value, name, isChecked, isVisuallyChecked, isRequired, children, onChange}) => {
     const inputId = `${name}-${value}`;
 
     return (
@@ -26,8 +25,6 @@ const RadioInput: React.FC<RadioInputProps> = ({value, name, isChecked, isVisual
                 name={name}
                 type="radio"
                 required={isRequired}
-                aria-required={isRequired ? 'true' : 'false'}
-                aria-describedby={errorId ? errorId : undefined}
                 onChange={onChange}
             />
             <label className={`${styles.label} ${isVisuallyChecked && styles.checked}`} htmlFor={inputId}>

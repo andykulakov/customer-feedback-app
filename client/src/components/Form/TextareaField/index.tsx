@@ -36,10 +36,13 @@ const TextareaField: React.FC<TextareaFieldProps> = ({value, name, placeholder, 
                 maxLength={maxLength}
                 required={isRequired}
                 aria-required={isRequired ? 'true' : 'false'}
+                aria-invalid={error.hasErrors ? 'true' : 'false'}
                 aria-describedby={error.hasErrors ? errorId : undefined}
                 onChange={onChange}
             />
-            {error.hasErrors && <ErrorMessage id={errorId}>{error.message}</ErrorMessage>}
+            <ErrorMessage id={errorId} isHidden={!error.hasErrors}>
+                {error.message}
+            </ErrorMessage>
         </React.Fragment>
     );
 };
