@@ -1,6 +1,24 @@
-# Getting Started with Create React App
+# Front End application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Front End app to submit product reviews, view the latest comments and see the product's stats.
+
+Made using:
+- TypeScript
+- React
+- React Hooks
+- React Context
+- Chart.js
+- React Testing Library
+- CSS modules
+- Axios
+- ESLint
+- Prettier
+
+The application's functionality is very straightforward, so I've decided not to use any additional tools like Redux, CSS preprocessors or CSS-in-JS libraries.\
+Instead, I used built-in features such as React Context and CSS modules.\
+This helped me to keep the code base more light, readable and not overcomplicated.
+
+Chart.js React library was chosen as it's the lightest of all well-crafted Chart libraries ([BundlePhobia info](https://bundlephobia.com/package/react-chartjs-2@4.3.0)). The package's bundle size was a priority as the application didn't require a complex graph.
 
 ## Available Scripts
 
@@ -38,9 +56,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
