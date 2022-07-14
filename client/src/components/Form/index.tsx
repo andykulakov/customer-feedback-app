@@ -59,7 +59,7 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
                 }
             }
         },
-        [validateFormAndGetIsValid]
+        [validateFormAndGetIsValid, tryPostReview]
     );
 
     const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
