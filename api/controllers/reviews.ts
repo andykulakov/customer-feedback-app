@@ -13,7 +13,7 @@ export async function getReviews(req: Request, res: Response) {
         res.status(500).json({
             success: false
         });
-        console.error('Could not retrieve reviews:', error);
+        console.error('Could not retrieve reviews.', error);
     }
 }
 
@@ -30,7 +30,7 @@ export async function postReview(req: Request, res: Response) {
         res.status(500).json({
             success: false
         });
-        console.error('Could not save a review', error);
+        console.error('Could not save a review.', error);
     }
 }
 
@@ -44,7 +44,7 @@ export async function deleteReviews(req: Request, res: Response) {
         res.status(500).json({
             success: false
         });
-        console.error('Could not delete reviews', error);
+        console.error('Could not delete reviews.', error);
     }
 }
 
@@ -60,6 +60,6 @@ export async function populateReviews(req: Request, res: Response) {
         res.status(500).json({
             success: false
         });
-        console.error('Could not save a review', error);
+        console.error('Could not save a review.', error);
     }
 }

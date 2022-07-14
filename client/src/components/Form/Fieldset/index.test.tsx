@@ -4,22 +4,22 @@ import {render, screen} from '@testing-library/react';
 import Fieldset from '.';
 
 describe('client/src/components/Form/Fieldset', () => {
-    it('should display a legend', () => {
+    function createTestables() {
         render(
-            <Fieldset legend="Legend">
+            <Fieldset aria-required="true" aria-invalid="false" aria-describedby="id" legend="Legend" isRequired>
                 <input type="text" />
             </Fieldset>
         );
+    }
+
+    it('should display a legend', () => {
+        createTestables();
 
         expect(screen.getByRole('group')).toHaveAccessibleName('Legend');
     });
 
     it('should display children', () => {
-        render(
-            <Fieldset legend="Legend">
-                <input type="text" />
-            </Fieldset>
-        );
+        createTestables();
 
         expect(screen.getByRole('textbox')).toBeInTheDocument();
     });

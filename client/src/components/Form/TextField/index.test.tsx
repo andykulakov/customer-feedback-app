@@ -21,7 +21,7 @@ function createTestables(propOverrides?: Partial<TextFieldProps>) {
     );
 }
 
-describe('client/src/components/Form/TextareaField', () => {
+describe('client/src/components/Form/TextField', () => {
     it('should display the label', () => {
         createTestables({
             label: 'Test Input Label'

@@ -21,14 +21,22 @@ export interface RadioGroupFieldProps {
 }
 
 const RadioGroupField: React.FC<RadioGroupFieldProps> = ({name, value, label, length, error, isRequired, onChange}) => {
+    const errorId = `${name}-error`;
+
     return (
-        <Fieldset legend={label}>
+        <Fieldset
+            legend={label}
+            isRequired={isRequired}
+            aria-required={isRequired ? 'true' : 'false'}
+            aria-invalid={error.hasErrors ? 'true' : 'false'}
+            aria-describedby={errorId}
+        >
             {getArrayFromLength(length).map(inputValue => {
                 return (
                     <RadioInput
                         key={inputValue}
                         value={inputValue}
-                        name="rating"
+                        name={name}
                         isChecked={Number(value) === inputValue}
                         isVisuallyChecked={inputValue <= value}
                         isRequired={isRequired}
@@ -39,7 +47,9 @@ const RadioGroupField: React.FC<RadioGroupFieldProps> = ({name, value, label, le
                     </RadioInput>
                 );
             })}
-            {error.hasErrors && <ErrorMessage>{error.message}</ErrorMessage>}
+            <ErrorMessage id={errorId} isHidden={!error.hasErrors}>
+                {error.message}
+            </ErrorMessage>
         </Fieldset>
     );
 };

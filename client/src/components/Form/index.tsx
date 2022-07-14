@@ -1,6 +1,6 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
-import {getDataService} from '../../services/data';
+import {postReview} from '../../services/actions';
 import {ReviewForm} from '../../types/forms';
 import {FormFields} from '../../types/enums';
 import {useFormValidation} from '../../hooks/useFormValidation';
@@ -9,6 +9,7 @@ import TextField from './TextField';
 import RadioGroupField from './RadioGroupField';
 import TextareaField from './TextareaField';
 import Button from '../Button';
+import ErrorMessage from './ErrorMesage';
 
 import {initialFormData, initialErrors, validationRules} from './configuration';
 import styles from './index.module.css';
@@ -17,9 +18,33 @@ interface FormProps {
     onSubmitSuccess(): void;
 }
 
+function getFormattedFieldValue(field: FormFields, value: string): string | number {
+    switch (field) {
+        case FormFields.Rating:
+            return Number(value);
+        default:
+            return value;
+    }
+}
+
 const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
+    const formRef = useRef<HTMLFormElement | null>(null);
     const [form, setForm] = useState<ReviewForm>(initialFormData);
-    const {errors, setErrors, validateField, validateFormAndGetIsValid} = useFormValidation({form, validationRules, initialErrors});
+    const [formErrorMessage, setFormErrorMessage] = useState('');
+    const {errors, validateFieldIfHasError, validateFormAndGetIsValid} = useFormValidation({form, validationRules, initialErrors});
+
+    const tryPostReview = useCallback(() => {
+        postReview(form)
+            .then(() => {
+                setForm(initialFormData);
+                setFormErrorMessage('');
+                onSubmitSuccess();
+            })
+            .catch(error => {
+                setFormErrorMessage('Review submission failed. Please, try again.');
+                console.error('Could not submit review.', error);
+            });
+    }, [form, onSubmitSuccess]);
 
     const handleSubmit: React.FormEventHandler = useCallback(
         async event => {
@@ -27,41 +52,32 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
             const isFormValid = validateFormAndGetIsValid();
 
             if (isFormValid) {
-                getDataService()
-                    .postReview(form)
-                    .then(() => {
-                        setForm(initialFormData);
-                        onSubmitSuccess();
-                    });
+                tryPostReview();
+            } else {
+                if (formRef.current) {
+                    formRef.current?.scrollIntoView();
+                }
             }
         },
-        [form, validateFormAndGetIsValid, onSubmitSuccess]
+        [validateFormAndGetIsValid, tryPostReview]
     );
 
     const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
         event => {
             const name = event.target.name as FormFields;
-            const value = name === FormFields.Rating ? Number(event.target.value) : event.target.value;
+            const value = getFormattedFieldValue(name, event.target.value);
 
             setForm(prevForm => ({
                 ...prevForm,
                 [name]: value
             }));
-
-            const {hasErrors, message} = validateField(name, value);
-            setErrors(prevState => ({
-                ...prevState,
-                [name]: {
-                    hasErrors,
-                    message
-                }
-            }));
+            validateFieldIfHasError(name, value);
         },
-        [setErrors, validateField]
+        [validateFieldIfHasError]
     );
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
+        <form ref={formRef} onSubmit={handleSubmit} noValidate>
             <div className={styles.inputWrapper}>
                 <TextField
                     value={form.name}
@@ -110,7 +126,12 @@ const Form: React.FC<FormProps> = ({onSubmitSuccess}) => {
                 />
             </div>
             <div className={styles.inputWrapper}>
-                <Button type="submit">Submit your review</Button>
+                <Button type="submit" aria-describedby="submit-error">
+                    Submit your review
+                </Button>
+                <ErrorMessage id="submit-error" isHidden={!formErrorMessage}>
+                    {formErrorMessage}
+                </ErrorMessage>
             </div>
         </form>
     );

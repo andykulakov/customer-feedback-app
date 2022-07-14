@@ -20,10 +20,13 @@ export interface TextareaFieldProps {
 
 const TextareaField: React.FC<TextareaFieldProps> = ({value, name, placeholder, label, maxLength, error, isRequired, onChange}) => {
     const inputId = `input-${name}`;
+    const errorId = `${name}-error`;
 
     return (
         <React.Fragment>
-            <Label htmlFor={inputId}>{label}</Label>
+            <Label htmlFor={inputId} isRequired={isRequired}>
+                {label}
+            </Label>
             <textarea
                 id={inputId}
                 className={`${styles.textarea} ${error.hasErrors && styles.error}`}
@@ -32,9 +35,14 @@ const TextareaField: React.FC<TextareaFieldProps> = ({value, name, placeholder, 
                 placeholder={placeholder}
                 maxLength={maxLength}
                 required={isRequired}
+                aria-required={isRequired ? 'true' : 'false'}
+                aria-invalid={error.hasErrors ? 'true' : 'false'}
+                aria-describedby={error.hasErrors ? errorId : undefined}
                 onChange={onChange}
             />
-            {error.hasErrors && <ErrorMessage>{error.message}</ErrorMessage>}
+            <ErrorMessage id={errorId} isHidden={!error.hasErrors}>
+                {error.message}
+            </ErrorMessage>
         </React.Fragment>
     );
 };
