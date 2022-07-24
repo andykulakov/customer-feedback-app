@@ -3,3 +3,16 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
+// Mock canvas
+import 'jest-canvas-mock';
+
+class ResizeObserver {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    observe() {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    unobserve() {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    disconnect() {}
+}
+window.ResizeObserver = ResizeObserver;

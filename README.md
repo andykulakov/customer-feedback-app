@@ -1,4 +1,4 @@
-# Checkout.com Front End Challenge
+# Customer Feedback App
 
 Fullstack Customer Feedback application:
 - Front End app 
