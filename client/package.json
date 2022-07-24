@@ -14,9 +14,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts test",
+    "sourcemap-build": "react-scripts build",
+    "test": "react-scripts test --watchAll=false",
+    "interactive-test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "prepare": "cd .. && husky install client/.husky"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +50,15 @@
       }
     }
   },
+  "jest": {
+    "resetMocks": false
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,tsx,js,jsx,json,css,md}": [
+      "prettier --write",
+      "eslint ./src/ --ext .ts,.tsx --cache"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -74,6 +86,9 @@
     "eslint-plugin-jsx-a11y": "^6.6.0",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.0",
+    "jest-canvas-mock": "^2.4.0",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "source-map-explorer": "^2.5.2",
     "typescript": "^4.7.4"

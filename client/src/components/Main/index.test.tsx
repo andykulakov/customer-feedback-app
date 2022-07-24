@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 
 import * as actionsModule from '../../services/actions';
 import {getMockedReview} from '../../helpers/testing';
@@ -11,7 +11,7 @@ describe('client/src/components/Main', () => {
     const mockedReview = getMockedReview();
 
     it('should fetch data and update the context after the component is mounted', async () => {
-        let getReviewsMock = jest.spyOn(actionsModule, 'getReviews').mockResolvedValue([mockedReview]);
+        const getReviewsMock = jest.spyOn(actionsModule, 'getReviews').mockResolvedValue([mockedReview]);
         render(
             <AppContextProvider>
                 <Main />
@@ -19,6 +19,6 @@ describe('client/src/components/Main', () => {
         );
 
         expect(getReviewsMock).toHaveBeenCalled();
-        await waitFor(() => expect(screen.getByText(mockedReview.name)).toBeInTheDocument());
+        expect(await screen.findByText(mockedReview.name)).toBeInTheDocument();
     });
 });

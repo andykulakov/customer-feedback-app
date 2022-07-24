@@ -42,7 +42,7 @@ describe('client/src/components/Form/RadioGroupField', () => {
             name: 'Test Name'
         });
 
-        screen.getAllByRole<HTMLInputElement>('radio').map(input => {
+        screen.getAllByRole<HTMLInputElement>('radio').forEach(input => {
             expect(input.name).toBe('Test Name');
         });
     });
@@ -52,7 +52,7 @@ describe('client/src/components/Form/RadioGroupField', () => {
             isRequired: true
         });
 
-        screen.getAllByRole<HTMLInputElement>('radio').map(input => {
+        screen.getAllByRole<HTMLInputElement>('radio').forEach(input => {
             expect(input).toBeRequired();
         });
     });

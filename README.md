@@ -1,6 +1,6 @@
-# Checkout.com Front End Challenge
+# Customer Feedback App
 
-Fullstack Customer Feedback application:
+Full-stack Customer Feedback application:
 - Front End app 
 - RESTful API app
 - MongoDB container
@@ -25,7 +25,6 @@ If you don't want to fill in a lot of reviews yourself, you can populate the DB 
 ## What's left to improve
 
 - Add pagination to fetch and display all reviews instead of the latest ones.
-- Add git hooks to run tests before each push.
 - Add a logger.
 - Add a build script with SonarCloud stage to analyse test coverage.
 - Add tests to the API app.

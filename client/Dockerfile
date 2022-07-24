@@ -2,13 +2,14 @@ FROM node:16 AS builder
 
 WORKDIR /client
 
-COPY package*.json /client/
+COPY package.json /client/
+COPY yarn.lock /client/
 
-RUN npm install
+RUN yarn
 
 COPY . /client/
 
-RUN npm run build
+RUN yarn build
 
 FROM nginx:1.21.0-alpine AS production
 

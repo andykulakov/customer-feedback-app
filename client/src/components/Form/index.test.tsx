@@ -1,11 +1,14 @@
 import React from 'react';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import * as actionsModule from '../../services/actions';
 
 import Form from '.';
 
 describe('client/src/components/Form', () => {
+    // scrollIntoView is not implemented in jsdom by default
+    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+
     describe('should update text inputs', () => {
         render(<Form onSubmitSuccess={jest.fn()} />);
 
@@ -85,7 +88,7 @@ describe('client/src/components/Form', () => {
 
     describe('should handle review submissions', () => {
         it('should not submit form and display an error if it has invalid fields', () => {
-            let postReviewsMock = jest.spyOn(actionsModule, 'postReview');
+            const postReviewsMock = jest.spyOn(actionsModule, 'postReview');
             const mockedOnSubmitSuccess = jest.fn();
             render(<Form onSubmitSuccess={mockedOnSubmitSuccess} />);
 
@@ -96,7 +99,7 @@ describe('client/src/components/Form', () => {
         });
 
         it('should display the error message if the review submission request failed', async () => {
-            let postReviewsMock = jest.spyOn(actionsModule, 'postReview').mockImplementation(() => {
+            const postReviewsMock = jest.spyOn(actionsModule, 'postReview').mockImplementation(() => {
                 return Promise.reject('Error');
             });
             const mockedOnSubmitSuccess = jest.fn();
@@ -112,7 +115,7 @@ describe('client/src/components/Form', () => {
 
             expect(postReviewsMock).toHaveBeenCalled();
             expect(mockedOnSubmitSuccess).not.toHaveBeenCalled();
-            await waitFor(() => expect(screen.getByText('Review submission failed. Please, try again.')).toBeInTheDocument());
+            expect(await screen.findByText('Review submission failed. Please, try again.')).toBeInTheDocument();
         });
     });
 });
