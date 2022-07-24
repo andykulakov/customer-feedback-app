@@ -55,8 +55,7 @@
   "lint-staged": {
     "./src/**/*.{ts,tsx,js,jsx,json,css,md}": [
       "prettier --write",
-      "eslint ./src/ --ext .ts,.tsx --cache",
-      "git add"
+      "eslint ./src/ --ext .ts,.tsx --cache"
     ]
   },
   "browserslist": {
