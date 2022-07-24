@@ -1,5 +1,3 @@
-import {FormFields} from './enums';
-
 export interface DBReview {
     id: string;
     date: string;

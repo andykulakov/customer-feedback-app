@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import {getMockedDataResponse, getMockedDBReview, getMockedReviewForm} from '../helpers/testing';
 import {getDataService, API_URL} from './data';
-import {getReviews} from './actions';
 
 describe('client/src/services/data', () => {
     describe('getReviews', () => {

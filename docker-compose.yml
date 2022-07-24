@@ -13,7 +13,7 @@ services:
     links:
       - api
     networks:
-      - checkoutchallenge
+      - customerfeedback
   api:
     build:
       dockerfile: Dockerfile
@@ -29,7 +29,7 @@ services:
     depends_on:
       - mongodb
     networks:
-      - checkoutchallenge
+      - customerfeedback
   mongodb:
     image: mongo
     restart: always
@@ -40,7 +40,7 @@ services:
       - 27017:27017
     command: mongod --noauth --smallfiles
     networks:
-      - checkoutchallenge
+      - customerfeedback
 networks:
-  checkoutchallenge:
+  customerfeedback:
     driver: bridge

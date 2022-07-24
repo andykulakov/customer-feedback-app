@@ -2,14 +2,15 @@ FROM node:16 AS build
 
 WORKDIR /api
 
-COPY package*.json /api/
+COPY package.json /api/
+COPY yarn.lock /api/
 COPY tsconfig.json /api/
 
-RUN npm install
+RUN yarn
 
 COPY . /api/
 
-RUN npm run build
+RUN yarn build
 
 EXPOSE 9000
 
@@ -17,9 +18,10 @@ FROM node:16 AS production
 
 WORKDIR /api
 
-COPY package*.json /api/
+COPY package.json /api/
+COPY yarn.lock /api/
 
-RUN npm install --production
+RUN yarn --production
 RUN npm install pm2 -g
 
 COPY --from=build /api/dist .

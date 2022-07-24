@@ -36,6 +36,6 @@ describe('client/src/components/AppContextProvider', () => {
 
         fireEvent.click(screen.getByRole('button'));
 
-        expect(screen.queryByText(mockedReview.name)).toBeInTheDocument();
+        expect(screen.getByText(mockedReview.name)).toBeInTheDocument();
     });
 });

@@ -1,6 +1,6 @@
 # Customer Feedback App
 
-Fullstack Customer Feedback application:
+Full-stack Customer Feedback application:
 - Front End app 
 - RESTful API app
 - MongoDB container
