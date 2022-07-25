@@ -17,7 +17,7 @@ describe('client/src/services/data', () => {
     });
 
     describe('postReview', () => {
-        it("should send data to '/reviews/new' endpoint", async () => {
+        it("should post data to '/reviews' endpoint", async () => {
             const mockedReviewBody = getMockedReviewForm();
             const getAxiosPostMock = jest.spyOn(axios, 'post').mockResolvedValue(
                 getMockedDataResponse({
