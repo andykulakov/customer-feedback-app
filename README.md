@@ -20,7 +20,7 @@ This command will:
 
 After the containers are up and running, open [localhost:80](http://localhost:80) to view the Front End app.
 
-If you don't want to fill in a lot of reviews yourself, you can populate the DB with mocked reviews by sending a get request to [localhost:9000/reviews/populate](http://localhost:9000/reviews/populate).
+If you don't want to fill in a lot of reviews yourself, you can populate the DB with mocked reviews by sending a POST request to [localhost:9000/reviews/populate](http://localhost:9000/reviews/populate).
 
 ## What's left to improve
 

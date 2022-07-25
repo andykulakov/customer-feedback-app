@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --build",
     "start": "ts-node dist/index.js",
-    "dev": "nodemon --watch \"**\" --ext \"ts,json\" --exec \"ts-node index.ts\""
+    "dev": "nodemon --watch \"**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\""
   },
   "dependencies": {
     "body-parser": "^1.20.0",

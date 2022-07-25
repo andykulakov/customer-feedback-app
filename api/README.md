@@ -33,14 +33,14 @@ Runs the application's production build.
 
 A list of the latest reviews. Sorted by date and limited to 12 items.
 
-### `/reviews/new` (POST)
+### `/reviews` (POST)
 
 Adds a new review to the DB.
 
-### `/delete-all` (GET)
+### `/reviews` (DELETE)
 
 Deletes all reviews from the DB.
 
-### `/populate` (GET)
+### `/reviews/populate` (POST)
 
 Populates the DB with mocked reviews.

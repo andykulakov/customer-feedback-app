@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import {ReviewForm} from '../types/forms';
 
-export const API_URL = 'http://localhost:9000';
+const API_URL = 'http://localhost:9000';
+export const API_REVIEWS_URL = `${API_URL}/reviews`;
 let dataServiceInstance: DataService;
 
 export class DataService {
@@ -15,11 +16,11 @@ export class DataService {
     }
 
     public getReviews(): Promise<unknown> {
-        return this.get(`${API_URL}/reviews`);
+        return this.get(API_REVIEWS_URL);
     }
 
     public postReview(body: ReviewForm): Promise<void> {
-        return this.post(`${API_URL}/reviews/new`, body);
+        return this.post(API_REVIEWS_URL, body);
     }
 }
 
@@ -28,5 +29,6 @@ export function getDataService() {
         return dataServiceInstance;
     }
 
-    return new DataService();
+    dataServiceInstance = new DataService();
+    return dataServiceInstance;
 }
