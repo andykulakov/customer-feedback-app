@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 
 import * as actionsModule from '../../services/actions';
 import {getMockedReview} from '../../helpers/testing';
@@ -18,7 +18,7 @@ describe('client/src/components/Main', () => {
             </AppContextProvider>
         );
 
-        expect(getReviewsMock).toHaveBeenCalled();
+        await waitFor(() => expect(getReviewsMock).toHaveBeenCalled());
         expect(await screen.findByText(mockedReview.name)).toBeInTheDocument();
     });
 });

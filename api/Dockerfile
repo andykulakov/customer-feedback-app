@@ -12,8 +12,6 @@ COPY . /api/
 
 RUN yarn build
 
-EXPOSE 9000
-
 FROM node:16 AS production
 
 WORKDIR /api
@@ -26,6 +24,6 @@ RUN npm install pm2 -g
 
 COPY --from=build /api/dist .
 
-EXPOSE 80
+EXPOSE 9000
 
 CMD ["pm2-runtime", "dist/index.js"]

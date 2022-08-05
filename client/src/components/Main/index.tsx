@@ -4,10 +4,11 @@ import {getReviews} from '../../services/actions';
 
 import {AppContext} from '../AppContextProvider';
 import Form from '../Form';
-import Graph from '../Graph';
-import LatestComments from '../LatestComments';
 
 import styles from './index.module.css';
+
+const Graph = React.lazy(() => import('../Graph'));
+const LatestComments = React.lazy(() => import('../LatestComments'));
 
 const Main: React.FC = () => {
     const {setData} = useContext(AppContext);
