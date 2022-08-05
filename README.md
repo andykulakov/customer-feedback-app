@@ -18,7 +18,7 @@ This command will:
 3. Create and run all 3 containers.
 4. Bind the containers to a shared network.
 
-After the containers are up and running, open [localhost:80](http://localhost:80) to view the Front End app.
+After the containers are up and running, open [localhost:8080](http://localhost:8080) to view the Front End app.
 
 If you don't want to fill in a lot of reviews yourself, you can populate the DB with mocked reviews by sending a POST request to [localhost:9000/reviews/populate](http://localhost:9000/reviews/populate).
 
