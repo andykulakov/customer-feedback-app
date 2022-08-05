@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.get('/', getReviews);
 
-router.post('/new', postReview);
+router.post('/', postReview);
 
-router.get('/delete-all', deleteReviews);
+router.delete('/', deleteReviews);
 
-router.get('/populate', populateReviews);
+router.post('/populate', populateReviews);
 
 export default router;

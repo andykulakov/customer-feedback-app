@@ -4,10 +4,10 @@ import {render, screen} from '@testing-library/react';
 import App from '.';
 
 describe('client/src/components/App', () => {
-    it('should display a header element', () => {
+    it('should display a header element', async () => {
         render(<App />);
 
-        expect(screen.getByRole('banner')).toBeInTheDocument();
+        expect(await screen.findByRole('banner')).toBeInTheDocument();
     });
 
     it('should display a main element', () => {

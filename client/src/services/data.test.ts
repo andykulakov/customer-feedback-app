@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {getMockedDataResponse, getMockedDBReview, getMockedReviewForm} from '../helpers/testing';
-import {getDataService, API_URL} from './data';
+import {getDataService, API_REVIEWS_URL} from './data';
 
 describe('client/src/services/data', () => {
     describe('getReviews', () => {
@@ -11,13 +11,13 @@ describe('client/src/services/data', () => {
 
             const reviews = await getDataService().getReviews();
 
-            expect(getAxiosGetMock).toHaveBeenCalledWith(`${API_URL}/reviews`);
+            expect(getAxiosGetMock).toHaveBeenCalledWith(API_REVIEWS_URL);
             expect(reviews).toEqual(getMockedDataResponse([mockedDBReview]));
         });
     });
 
     describe('postReview', () => {
-        it("should send data to '/reviews/new' endpoint", async () => {
+        it("should post data to '/reviews' endpoint", async () => {
             const mockedReviewBody = getMockedReviewForm();
             const getAxiosPostMock = jest.spyOn(axios, 'post').mockResolvedValue(
                 getMockedDataResponse({
@@ -27,7 +27,7 @@ describe('client/src/services/data', () => {
 
             await getDataService().postReview(mockedReviewBody);
 
-            expect(getAxiosPostMock).toHaveBeenCalledWith(`${API_URL}/reviews/new`, mockedReviewBody);
+            expect(getAxiosPostMock).toHaveBeenCalledWith(API_REVIEWS_URL, mockedReviewBody);
         });
     });
 });
